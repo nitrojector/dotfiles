@@ -19,14 +19,12 @@ config.font = wezterm.font_with_fallback {
 	{ family ="monospace", weight = "Regular" },
 	{ family ="sans-serif", weight = "Regular" },
 }
+config.font_size = 12.0
 
 -- Window settings
 config.window_decorations = "RESIZE"  -- Full decoration
 config.window_decorations = "NONE"
 config.window_background_opacity = 0.95
-config.window_frame = {
-	font_size = 12,
-}
 config.window_padding = {
 	left = 8,
 	right = 8,
