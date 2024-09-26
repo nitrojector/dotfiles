@@ -1,9 +1,8 @@
 function dlk() {
-	local VERBOSE=0
-
 	if [ -z "$1" ]; then
-		echo "Links a file/dir to dotfiles repo"
-		echo "Usage: dlk <path to file>"
+		echo "dlk"
+		echo "Links files/dirs to a dotfiles repo under DOTFILES_DIR"
+		echo "Usage: dlk <path>"
 		return 1
 	fi
 
@@ -44,19 +43,23 @@ function dlk() {
 			continue
 		fi
 
-		local dotRelPath="$DOTFILES_DIR/${fullPath#$HOME/}"
+		local dotRelativePath="${fullPath#$HOME/}"
+		local dotPath="$DOTFILES_DIR/$dotRelativePath"
 
-
-		if [ -d "$dotRelPath" ]; then
-			echo "Oh no! $dotRelPath already exists for $i, different machine?"
+		if [ -e "$dotPath" ]; then
+			echo "Oh no! $dotPath already exists for $i, different client?"
 			continue
 		fi
 
-		echo "(Link) $dotRelPath <-> $fullPath"
+		# save path if dir
+		if [ -d "$fullPath" ]; then
+			touch "$DOTFILES_DIR/.linked_dirs"
+			echo "$dotRelativePath" >> "$DOTFILES_DIR/.linked_dirs"
+		fi
 
-		mkdir -p "$(dirname "$dotRelPath")"
-		mv -n  "$fullPath" "$dotRelPath"
-		ln -s "$dotRelPath" "$fullPath"
+		# Link items
+		mkdir -p "$(dirname "$dotPath")"
+		mv -n  "$fullPath" "$dotPath"
+		ln -s "$dotPath" "$fullPath" && echo "(Link) $dotPath <-> $fullPath"
 	done
 }
-

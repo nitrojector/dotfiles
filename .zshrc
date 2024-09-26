@@ -40,7 +40,7 @@ source $ZSH/oh-my-zsh.sh
 [[ -f ~/.path.zsh ]] && . ~/.path.zsh
 [[ -f ~/.alias.zsh ]] && . ~/.alias.zsh
 [[ -f ~/.func.zsh ]] && . ~/.func.zsh
-[[ -f "${DOTFILES_DIR}/.df.zsh" ]] && . "${DOTFILES_DIR}/.df.zsh"
+[[ -f "${DOTFILES_DIR}/df.zsh" ]] && . "${DOTFILES_DIR}/df.zsh"
 
 # Plugin Configs
 ## zsh-autosuggestions

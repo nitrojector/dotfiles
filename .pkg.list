@@ -49,6 +49,7 @@
 	./gitkraken-amd64.deb
 	winetricks
 	ripgrep
+	mpv
 !apt
 @brew
 	gcc
