@@ -1,0 +1,30 @@
+# Global settings
+import = [
+	"alacritty-theme/themes/gruvbox-dark.yaml",
+]
+working_directory = "/home/takina"
+
+[shell]
+program = "/usr/bin/tmux"
+args = ["new", "-A", "-s", "takina"]
+
+[env]
+WHATS_FOR_LUNCH = "🍣"
+
+[window]
+decorations = "Full"
+opacity = 0.95
+startup_mode = "Maximized"
+title = "瀧奈"
+dynamic_title = true
+dynamic_padding = true
+
+[scrolling]
+# we are using tmux, so we don't need alacritty to scroll
+history = 0
+multiplier = 4
+
+[font]
+normal = {family = "JetBrains Mono Nerd Font"}
+size = 12
+
