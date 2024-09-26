@@ -3,7 +3,7 @@ local mux = wezterm.mux;
 local config = wezterm.config_builder()
 
 --- Program
-config.default_prog = { "tmux", "new", "-A", "-s", "takina"}
+config.default_prog = { "/opt/homebrew/bin/tmux", "new", "-A", "-s", "takina"}
 config.default_cwd = "~/"
 
 --- Appearance
@@ -13,20 +13,18 @@ config.color_scheme = 'Gruvbox dark, hard (base16)'
 
 -- Font
 config.font = wezterm.font_with_fallback {
-	{ family ="JetBrains Mono Nerd Font", weight = "Regular" },
-	{ family ="JetBrains Mono", weight = "Regular" },
+	{ family ="JetBrainsMono Nerd Font", weight = "Regular" },
+	{ family ="JetBrainsMono", weight = "Regular" },
 	{ family ="Fira Code", weight = "Regular" },
 	{ family ="monospace", weight = "Regular" },
 	{ family ="sans-serif", weight = "Regular" },
 }
+config.font_size = 16.0
 
 -- Window settings
-config.window_decorations = "RESIZE"  -- Full decoration
-config.window_decorations = "NONE"
+config.window_decorations = "RESIZE | MACOS_FORCE_DISABLE_SHADOW"  -- Full decoration
+-- config.window_decorations = "NONE"
 config.window_background_opacity = 0.95
-config.window_frame = {
-	font_size = 12,
-}
 config.window_padding = {
 	left = 8,
 	right = 8,

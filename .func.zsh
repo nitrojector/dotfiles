@@ -67,189 +67,303 @@ function cliprun() {
 	eval "$(pbpaste)"
 }
 
-function fontinstall() {
-  # Check if the font directory exists
-  if [[ ! -d "$HOME/.fonts" ]]; then
-	mkdir "$HOME/.fonts"
+chelp () {
+  echo "Custom Script Help (edit June 30, 2022)"
+  printf '%*s' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+  echo
+  echo "bahaha\tRepeats \$1"
+  echo "skim\tOpens \$1 with Skim"
+  echo "spek\tOpens \$1 with Spek"
+  echo "dual\tTries to open another instances of \$1 [predefined seq]"
+  echo "\t\twechat - opens wechat"
+  echo "ptex\tCompiles \$1 with PDFLaTeX"
+  echo "dols\tLists files in DO Spaces with aws-cli; must add / if specific path"
+  echo "\t\tUsage: dols /prefix/of/file/"
+  echo "doup\tUploads \$1 as public to DO Spaces under temp folder"
+  echo "doupr\tUploads \$1 as public to DO Spaces under root or specified folder in \$2"
+  echo "doupp\tUploads \$1 as temporarily public to DO Spaces under temp folder with expire=\$2"
+  echo "douppr\tUploads \$1 as temporarily public to DO Spaces under root if unspecified\t\tor specified folder in \$3 with expire=\$2"
+  echo "ytdl\tAlias for youtube-dl"
+  echo "py\tAlias for python"
+  echo "cact\tAlias for conda activate"
+  echo "csql\tLogin mySQL through root with password"
+  echo "cst\tCustom specified speed test by Ookla"
+  echo "cvst\tCustom specified verbose speed test by Ookla"
+}
+
+# Custom Commands
+bahaha () {
+  echo "bahaha $1!"
+}
+
+st () {
+  open -a "Sublime Text" $1
+}
+
+hex () {
+  open -a "Hex Fiend" $1
+}
+
+skim () {
+  open -a "skim" $1
+}
+
+spek () {
+  open -a "spek" $1
+}
+
+dual () {
+  local app_path=""
+
+  # Set path for app based on input
+  if [ "$(echo "$1" | tr '[:upper:]' '[:lower:]')" = 'wechat' ]; then
+    app_path='/Applications/WeChat.app/Contents/MacOS/WeChat'
   fi
 
-  # Copy the font files to the font directory
-  cp "$@" "$HOME/.fonts"
-
-  # Update the font cache
-  fc-cache -f -v
-}
-
-function fontinstallzip() {
-  # Check if the font directory exists
-  if [[ ! -d "$HOME/.fonts" ]]; then
-	mkdir "$HOME/.fonts"
-  fi
-
-  # Extract the font files from the ZIP archive
-  unzip -j "$1" -d "$HOME/.fonts"
-
-  # Update the font cache
-  fc-cache -f -v
-}
-
-function update() {
-	sudo apt update
-	sudo apt upgrade
-	sudo apt full-upgrade
-
-	brew update
-	brew cask upgrade
-
-	sudo snap refresh
-}
-
-function dpi() {
-  sudo dpkg -i $1
-
-  if [ $? -eq 0 ]
-  then
-    echo Finished
+  # Determine validity
+  if ! [ -z "$app_path" ]; then
+    open -n $app_path
   else
-    echo "Dependency error? Trying that..."
-    sudo apt-get -f install
-  fi
-
-  if [ $? -eq 0 ]
-  then
-    echo Finished
-    mkdir -p ~/Downloads/installed
-    mv $1 ~/Downloads/installed
-  else
-    echo "Failed to install $1"
+    echo "Invalid option $app_path"
   fi
 }
 
-function ins() {
-    # Get the command type from the first argument
-    cmd_type="$1"
-    shift  # Remove the command type from the arguments
-    # Now, $@ contains the package names
+ptex () {
+  pdflatex -synctex=1 -interaction=nonstopmode $1
+}
 
-    # Handle the "all" case
-    if [[ "$cmd_type" == "all" ]]; then
-        echo "all"
-        return
-    fi
+uriencode_stdin() {
+    node -p 'encodeURIComponent(require("fs").readFileSync(0))'
+}
 
-    # Define command prefixes and region markers based on cmd_type
-    case "$cmd_type" in
-        apt | apt-get)
-            CMD_PREFIX=(sudo apt install)
-            REGION_START="@apt"
-            REGION_END="!apt"
-            ;;
-        brew)
-            CMD_PREFIX=(brew install)
-            REGION_START="@brew"
-            REGION_END="!brew"
-            ;;
-        snap)
-            CMD_PREFIX=(snap install)
-            REGION_START="@snap"
-            REGION_END="!snap"
-            ;;
-        flatpak)
-            CMD_PREFIX=(flatpak install)
-            REGION_START="@flatpak"
-            REGION_END="!flatpak"
-            ;;
-		aptrepo)
-			CMD_PREFIX=(sudo add-apt-repository)
-            REGION_START="@add-apt-repository"
-            REGION_END="!add-apt-repository"
-            ;;
-        *)
-            echo "Unknown command type: $cmd_type"
-            return 1
-            ;;
-    esac
+dols () {
+  aws s3 ls s3://jectorassets$1 --endpoint=https://nyc3.digitaloceanspaces.com/
+}
 
-    # Execute the installation command
-    "${CMD_PREFIX[@]}" "$@"
-    exit_status=$?
+doupr () {
+  aws s3 cp $1 s3://jectorassets$2 --endpoint=https://nyc3.digitaloceanspaces.com/ --acl public-read
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+  echo -n "Origin: \t"https://jectorassets.nyc3.digitaloceanspaces.com$2
+  [ -z "$2" ] && echo -n "/"
+  printf %s $1|jq -sRr @uri
+  echo -n "Edge: \t\t"https://jectorassets.nyc3.cdn.digitaloceanspaces.com$2
+  [ -z "$2" ] && echo -n "/"
+  printf %s $1|jq -sRr @uri
+  echo -n "Domain: \t"https://s3.jector.io$2
+  [ -z "$2" ] && echo -n "/"
+  printf %s $1|jq -sRr @uri
+}
 
-    PKG_FILE="$HOME/.pkg.list"
-
-    if [[ $exit_status -eq 0 ]]; then
-        # Command succeeded, proceed to update the package list file
-        if [[ -f "$PKG_FILE" ]]; then
-            # Read the file into an array
-            file_lines=("${(f)$(< "$PKG_FILE")}")
-            in_region=0
-            region_start_line=-1
-            region_end_line=-1
-            region_lines=()
-
-            # Find the region enclosed by REGION_START and REGION_END
-            for i in {1..${#file_lines[@]}}; do
-                line="${file_lines[$i]}"
-                if [[ "$line" == "$REGION_START" ]]; then
-                    in_region=1
-                    region_start_line=$i
-                    continue
-                fi
-                if [[ "$line" == "$REGION_END" ]]; then
-                    in_region=0
-                    region_end_line=$i
-                    break
-                fi
-                if [[ $in_region -eq 1 ]]; then
-                    region_lines+=("$line")
-                fi
-            done
-
-            if [[ $region_start_line -eq -1 ]]; then
-                # Region not found, append new region at the end
-                echo "$REGION_START" >> "$PKG_FILE"
-                for pkg in "$@"; do
-                    echo "$pkg" >> "$PKG_FILE"
-                done
-                echo "$REGION_END" >> "$PKG_FILE"
-                echo "Updated $PKG_FILE with new region $REGION_START...$REGION_END"
-            else
-                # Region found, update it without duplicates
-                if [[ $region_end_line -eq -1 ]]; then
-                    region_end_line=${#file_lines[@]}
-                fi
-                for pkg in "$@"; do
-                    if ! printf '%s\n' "${region_lines[@]}" | grep -qxF $'\t'"$pkg"; then
-                        region_lines+=($'\t'"$pkg")
-                    fi
-                done
-                # Reconstruct the file with updated region
-                new_file_lines=()
-                for ((i=1; i<region_start_line; i++)); do
-                    new_file_lines+=("${file_lines[$i]}")
-                done
-                new_file_lines+=("$REGION_START")
-                new_file_lines+=("${region_lines[@]}")
-                new_file_lines+=("$REGION_END")
-                for ((i=region_end_line+1; i<=${#file_lines[@]}; i++)); do
-                    new_file_lines+=("${file_lines[$i]}")
-                done
-                printf '%s\n' "${new_file_lines[@]}" > "$PKG_FILE"
-                echo "Updated $PKG_FILE in region $REGION_START...$REGION_END"
-            fi
-        else
-            # File doesn't exist, create it with the new region
-            echo "$PKG_FILE not found, creating it."
-            {
-                echo "$REGION_START"
-                for pkg in "$@"; do
-                    echo "$pkg"
-                done
-                echo "$REGION_END"
-            } > "$PKG_FILE"
-            echo "Created $PKG_FILE with region $REGION_START...$REGION_END"
-        fi
+douppr () {
+  EXPIREIN=$2
+  ROOT=/
+  aws s3 cp $1 s3://jectorassets$3 --endpoint=https://nyc3.digitaloceanspaces.com/ --acl private
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+  if [ -z "$2" ]; then
+    echo "No expire time provided, uploaded as private file"
+  else
+    if [ -z "$3" ]; then
+      aws s3 presign s3://jectorassets/$1 --endpoint=https://nyc3.digitaloceanspaces.com/ --expires-in $EXPIREIN
     else
-        echo "Command failed with exit status $exit_status -> $PKG_FILE not updated."
+      aws s3 presign s3://jectorassets$3$1 --endpoint=https://nyc3.digitaloceanspaces.com/ --expires-in $EXPIREIN
     fi
+  fi
 }
 
+doup () {
+  DATE=`date +"%b-%Y"`
+  FOLD=`echo "$DATE" | awk '{ print tolower($1) }'`
+  aws s3 cp $1 s3://jectorassets/tmp/${FOLD}/$1 --endpoint=https://nyc3.digitaloceanspaces.com/ --acl public-read
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+  echo -n "Origin: \t"https://jectorassets.nyc3.digitaloceanspaces.com/tmp/$FOLD/
+  printf %s $1|jq -sRr @uri
+  echo -n "Edge: \t\t"https://jectorassets.nyc3.cdn.digitaloceanspaces.com/tmp/$FOLD/
+  printf %s $1|jq -sRr @uri
+  echo -n "Domain: \t"https://s3.jector.io/tmp/$FOLD/
+  printf %s $1|jq -sRr @uri
+}
+
+doupp () {
+  DATE=`date +"%b-%Y"`
+  FOLD=`echo "$DATE" | awk '{ print tolower($1) }'`
+  EXPIREIN=$2
+  aws s3 cp $1 s3://jectorassets/tmp/${FOLD}/$1 --endpoint=https://nyc3.digitaloceanspaces.com/ --acl private
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+  if [ -z "$2" ];
+  then
+    echo "No expire time provided, uploaded as private file"
+  else
+   aws s3 presign s3://jectorassets/tmp/$FOLD/$1 --endpoint=https://nyc3.digitaloceanspaces.com/ --expires-in $EXPIREIN
+  fi
+}
+
+unsetproxy () {
+  unset http_proxy
+  unset https_proxy
+  unset telnet_proxy
+  unset ftp_proxy
+
+  echo 'unset all proxies'
+}
+
+setproxy () {
+  local pport=7890
+
+  if [ ! -z "$1" ]
+  then
+    pport=$1
+  fi
+
+  export "http_proxy=http://127.0.0.1:$pport/"
+  export "https_proxy=http://127.0.0.1:$pport/"
+  export "telnet_proxy=http://127.0.0.1:$pport/"
+  export "ftp_proxy=http://127.0.0.1:$pport/"
+  echo "set proxies to local port $pport"
+}
+
+entry () {
+  ENTRYLOC="/Users/martingwq/Git/_personal/365/$(date +'%Y/%m/%d').md"
+  REPOLOC="/Users/martingwq/Git/_personal/365/"
+  PREVLOC="$PWD"
+
+  while getopts ":p" opt; do
+    case $opt in
+      p)
+        echo "Attempting push..."
+        cd $REPOLOC
+        git push
+        cd $PREVLOC
+        return 0
+        ;;
+      \?)
+        echo "Invalid option: -$OPTARG" >&2
+        ;;
+    esac
+  done
+
+  echo "EntryPath: $ENTRYLOC\n"
+
+  cd $REPOLOC
+
+  echo "Pulling remote..."
+  git -C $REPOLOC pull
+
+  GITLASTCOMMITCODE=$(git -C $REPOLOC show -s --format=%s)
+
+  if test -f "$ENTRYLOC"; then
+    echo "Entry alread exists, adding to existing entry...\n"
+  else
+    echo "Creating new entry...\n"
+    mkdir -p $(dirname $ENTRYLOC)
+    touch $ENTRYLOC
+    echo "# $(date +'%B %d, %Y')" >> $ENTRYLOC
+  fi
+
+  echo "\n## $(date +'%H:%M:%S')\n\n" >> $ENTRYLOC
+
+  vi "+normal G$" $ENTRYLOC
+  # vi "+normal G$" +startinsert $ENTRYLOC
+
+  GITCURRENTCOMMITCODE="$(date +'%Y%m%d')-0"
+
+  if [[ "$(date +'%Y%m%d')" = "${GITLASTCOMMITCODE:0:8}" ]]; then
+    GITCURRENTCOMMITCODE="$(date +'%Y%m%d')-$((${GITLASTCOMMITCODE:9} + 1))"
+  fi
+
+  git -C $REPOLOC add *
+  git -C $REPOLOC commit -m "$GITCURRENTCOMMITCODE"
+
+  echo "Entry committed\n"
+
+  {
+    git -C $REPOLOC push
+
+    echo "Attempt push success.\n"
+
+  } || {
+    echo "Failed to push to remote. Retry with -p"
+  }
+
+  git -C $REPOLOC log -n 1
+
+  cd $PREVLOC
+}
+
+opttest () {
+  while getopts ":a:" opt; do
+    case $opt in
+      a)
+        echo "-a was triggered, Parameter: $OPTARG" >&2
+        ;;
+      \?)
+        echo "Invalid option: -$OPTARG" >&2
+        exit 1
+        ;;
+      :)
+        echo "Option -$OPTARG requires an argument." >&2
+        exit 1
+        ;;
+    esac
+  done
+}
+
+entryg () {
+  ENTRYLOC="/Users/martingwq/Git/_personal/365g/$(date +'%Y/%m/%d').md"
+  REPOLOC="/Users/martingwq/Git/_personal/365g/"
+  ALIAS="wyvern"
+
+  echo "EntryPath: $ENTRYLOC\n"
+
+  cd $REPOLOC
+
+  echo "git pull:"
+  git -C $REPOLOC pull
+
+  GITLASTCOMMITCODE=$(git -C $REPOLOC show -s --format=%s)
+
+  if test -f "$ENTRYLOC"; then
+    echo "Entry alread exists, skipping creation...\n"
+  else
+    echo "No entry found, creating...\n"
+    mkdir -p $(dirname $ENTRYLOC)
+    touch $ENTRYLOC
+    echo "# $(date +'%B %d, %Y')" >> $ENTRYLOC
+  fi
+
+  echo "\n## $(date +'%H:%M:%S') ($ALIAS)\n\n" >> $ENTRYLOC
+
+  vi "+normal G$" $ENTRYLOC
+  # vi "+normal G$" +startinsert $ENTRYLOC
+
+  GITCURRENTCOMMITCODE="$(date +'%Y%m%d')-0"
+
+  if [[ "$(date +'%Y%m%d')" = "${GITLASTCOMMITCODE:0:8}" ]]; then
+    GITCURRENTCOMMITCODE="$(date +'%Y%m%d')-$((${GITLASTCOMMITCODE:9} + 1))"
+  fi
+
+  git -C $REPOLOC add *
+  git -C $REPOLOC commit -m "$GITCURRENTCOMMITCODE"
+
+  echo "Entry committed\n"
+
+  {
+    git -C $REPOLOC push
+
+    echo "Entry pushed to remote:main\n"
+
+  } || {
+    echo "Push to remote failed"
+  }
+
+  git -C $REPOLOC log -n 1
+}
+
+oln () {
+  ping -oc 100000 $1 > /dev/null && osascript -e "display notification \"Ping succeeded with $1\" with title \"Back Online\"" || echo ""
+  say "Service Online"
+}
+
+oln1 () {
+  ping -oc 100000 1.1.1.1 > /dev/null && osascript -e "display notification \"Ping succeeded with 1.1.1.1\" with title \"Back Online\"" || echo ""
+  say "Network Online"
+}

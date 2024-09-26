@@ -1,19 +1,8 @@
-prependpath() {
-  paths="$1"
-  toadd="$2"
-  case ":$paths:" in
-    *:"$toadd":*)
-      echo "$paths"
-      ;;
-    *)
-      echo "$toadd${paths:+:$paths}"
-      ;;
-  esac
-}
-
-# Paths
-# PATH="$(prependpath "$PATH" /)"
-PATH="$(prependpath "$PATH" "/usr/local/cuda-12/bin")"
-PATH="$(prependpath "$PATH" "/home/takina/Android/Sdk/platform-tools")"
-PATH="$(prependpath "$PATH" "/opt/go/bin")"
-
+export PATH=$PATH:/Users/martingwq/bin/
+export PATH=$PATH:/Users/martingwq/bin/waifu2x-ncnn-vulkan/
+export PATH=$PATH:/Users/martingwq/Library/Android/sdk/platform-tools/
+export PATH=$PATH:/Users/martingwq/bin/nvim-macos/bin/
+export PATH=$PATH:/opt/homebrew/Cellar/libusb/1.0.26/lib/
+export PATH=$PATH:/usr/local/go/bin/
+export PATH=/Users/martingwq/Luxonis/depthai/entrypoint:$PATH
+export PATH=~/.console-ninja/.bin:$PATH
