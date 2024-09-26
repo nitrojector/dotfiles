@@ -1,12 +1,20 @@
 #!/bin/zsh
 
+SCRIPT_DIR=
 SCRIPT_PATH=$(readlink -e -- "$0")
-SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
+if [ $? -ne 0 ]; then
+  echo "readlink didn't work, we assume dotfiles dir to be pwd (make sure that's right!)"
+  echo "pwd: $PWD"
+  SCRIPT_DIR=$PWD
+else
+  SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
+fi
+
 cd "$SCRIPT_DIR"
 
 T_HOME=$HOME
 
-EXLUDE_PAT='(^dfinstall\.zsh$)|(^df\.zsh$)|(^README\.md$)'
+EXLUDE_PAT='(^dfinstall\.zsh$)|(^df\.zsh$)|(^README\.md$)|(^\.linked_dirs$)'
 force_=0
 
 if [ "$1" = "-f" ]; then
@@ -25,32 +33,41 @@ fi
 
 
 # link files
-ls -Ap | grep -v / | while read -r line; do
-	if [[ $line =~ $EXLUDE_PAT ]]; then
+ls -Ap | grep -v / | while read -r p; do
+  echo $p
+	if [[ $p =~ $EXLUDE_PAT ]]; then
 		continue
 	fi
 
-	if [ -e "$T_HOME/$line" ]; then
+	if [ -e "$T_HOME/$p" ]; then
+    if [ -L "$T_HOME/$p" ]; then
+			echo "File $p already exist symbolicly. Probably already linked. Skip."
+      continue
+    fi
 		if [ $force_ -eq 1 ]; then
-			echo "force: File $T_HOME/$line already exists. Remove and link."
-			rm "$T_HOME/$line"
+			echo "force: File $T_HOME/$p already exists. Remove and link."
+			rm "$T_HOME/$p"
 		else
-			echo "File $T_HOME/$line already exists. Skip."
+			echo "File $p already exists, and is not symbolic. Run with -f to overwrite."
 			continue
 		fi
 	fi
 
-	ln -s "$SCRIPT_DIR/$line" "$T_HOME/$line" && echo "(Link) $SCRIPT_DIR/$line <-> $T_HOME/$line"
+	ln -s "$SCRIPT_DIR/$p" "$T_HOME/$p" && echo "(Link) $SCRIPT_DIR/$p <-> $T_HOME/$p"
 done
 
 # link dirs
 while read -r p; do
 	if [ -e "$T_HOME/$p" ]; then
+    if [ -L "$T_HOME/$p" ]; then
+			echo "Dir $p already exist symbolicly. Probably already linked. Skip."
+      continue
+    fi
 		if [ $force_ -eq 1 ]; then
 			echo "force: Dir $T_HOME/$p already exists. Remove and link."
 			rm -r "$T_HOME/$p"
 		else
-			echo "Dir $T_HOME/$p already exists. Skip."
+			echo "Dir $p already exists, and is not symbolic. Run with -f to overwrite."
 			continue
 		fi
 	fi
