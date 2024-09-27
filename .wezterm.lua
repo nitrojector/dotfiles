@@ -19,7 +19,7 @@ config.font = wezterm.font_with_fallback {
 	{ family ="monospace", weight = "Regular" },
 	{ family ="sans-serif", weight = "Regular" },
 }
-config.font_size = 12.0
+config.font_size = 11.0
 
 -- Window settings
 config.window_decorations = "RESIZE"  -- Full decoration

@@ -9,6 +9,7 @@ vim.cmd([[colorscheme monokai-pro]])
 
 -- LSPs
 require'lspconfig'.pyright.setup{}
+require'lspconfig'.clangd.setup{}
 
 -- copy @ -> + when tabbing out
 vim.api.nvim_create_autocmd({ "FocusLost" }, {
