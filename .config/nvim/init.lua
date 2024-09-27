@@ -8,14 +8,24 @@ vim.cmd('source ' .. VIMRC_PATH)
 vim.cmd([[colorscheme monokai-pro]])
 
 -- LSPs
-require'lspconfig'.pyright.setup{}
-require'lspconfig'.clangd.setup{}
+local lspconf = require('lspconfig')
+
+lspconf.pyright.setup{}
+lspconf.clangd.setup{}
+
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+	buffer = buffer,
+	callback = function()
+		vim.lsp.buf.format({ async = false })
+	end
+})
 
 -- copy @ -> + when tabbing out
 vim.api.nvim_create_autocmd({ "FocusLost" }, {
 	pattern = { "*" },
 	command = [[call setreg("+", getreg("@"))]],
 })
+
 
 -- Automatically re-indent the entire file on save
 -- vim.api.nvim_create_autocmd("BufWritePre", {

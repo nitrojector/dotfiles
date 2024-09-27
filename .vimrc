@@ -65,7 +65,7 @@ call plug#end()
 " vim-tmux-navigator
 nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
 " nnoremap <silent> <Leader>o :tabe<CR>:Files<CR> " Apparently I don't need this, just use C-t with :Files
-nnoremap <silent> <Leader>f :Files<CR>
+nnoremap <silent> <Leader>ff :Files<CR>
 "VSCODE_UNSUPPORTED_END
 
 
