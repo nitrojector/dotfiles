@@ -3,4 +3,4 @@
 > [!NOTE]
 > [`df.zsh`](df.zsh) contains a function for linking files to this repo.
 > 
-> [`dfinstall.zsh`](dfinstall.zsh) contains a function for linking files to this repo.
+> [`dfinstall.zsh`](dfinstall.zsh) contains a install script for the dotfiles to the home dir.
