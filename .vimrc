@@ -53,6 +53,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'neovim/nvim-lspconfig'
 Plug 'stevearc/conform.nvim'
 Plug 'folke/trouble.nvim'
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
 call plug#end()
 
@@ -63,9 +64,9 @@ call plug#end()
 " imap <silent> <C-k> <Plug>(copilot-prev) " Disabled b/c conflict with
 
 " vim-tmux-navigator
-nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
-" nnoremap <silent> <Leader>o :tabe<CR>:Files<CR> " Apparently I don't need this, just use C-t with :Files
-nnoremap <silent> <Leader>ff :Files<CR>
+nnoremap <silent> <leader>nt :NERDTreeToggle<CR>
+" nnoremap <silent> <leader>o :tabe<CR>:Files<CR> " Apparently I don't need this, just use C-t with :Files
+nnoremap <silent> <leader>f :Files<CR>
 "VSCODE_UNSUPPORTED_END
 
 
@@ -85,7 +86,7 @@ function! ToggleSpellCheck()
 	endif
 endfunction
 
-nnoremap <silent> <Leader>s :call ToggleSpellCheck()<CR>
+nnoremap <silent> <leader>s :call ToggleSpellCheck()<CR>
 
 " Create Blank Newlines and stay in Normal mode
 nnoremap <silent> zj :set paste<CR>o<Esc>:set nopaste<CR>
@@ -128,34 +129,31 @@ vnoremap <silent> <leader>l :exe "tabn ".g:lasttab<cr>
 nnoremap <silent> <C-t> :tabnew<CR>
 
 " Edit vimrc \rc
-nnoremap <silent> <Leader>rc :tabnew<CR>:e ~/.vimrc<CR>
-nnoremap <silent> <Leader>rl :tabnew<CR>:e ~/.config/nvim/init.lua<CR>
+nnoremap <silent> <leader>rc :tabnew ~/.vimrc<CR>
+nnoremap <silent> <leader>rl :tabnew ~/.config/nvim/init.lua<CR>
 
+nnoremap <leader>y :"+yy<CR>
+xnoremap <leader>y :y+<CR>
 
-nnoremap <silent> <Leader>y :y+<CR>
-nnoremap <silent> <Leader>p o<Esc>"+p
-nnoremap <silent> <Leader>P O<Esc>"+P
+" Paste and delete _ register
+xnoremap <silent> <leader>p "_dP
+
+" nnoremap <silent> <leader>p o<Esc>"+p
+" nnoremap <silent> <leader>P O<Esc>"+P
 
 " Show difference between buffer and file
-nnoremap <silent> <Leader>d :w !diff % -<CR>
-
-" Auto enter matching brackets {ERROR}
-" inoremap {<CR> {<BS>}<Esc>ko
-" inoremap [<CR> [<BS>]<Esc>ko
-" inoremap (<CR> (<BS>)<Esc>ko
-" inoremap "<CR> "<BS>"<Esc>ko
-" inoremap '<CR> '<BS>'<Esc>ko
+nnoremap <silent> <leader>d :w !diff % -<CR>
 
 " This is totally awesome - remap jj to escape in insert mode.	You'll never type jj anyway, so it's great!
 inoremap jj <Esc>
 
 " Save and run code
-nnoremap <Leader>ctex :w<CR>:!pdflatex -synctex=1 -interaction=nonstopmode "%:t"<CR>
-nnoremap <Leader>cp :w<CR>:!python %<CR>
-nnoremap <Leader>cn :w<CR>:!node %<CR>
-nnoremap <Leader>cj :w<CR>:!javac %<CR>:!java -cp %:p:h %:t:r<CR>
-nnoremap <Leader>cc :w<CR>:!g++ -g % -o %:r<CR>:!./%:r<CR>
-nnoremap <Leader>ct :w<CR>:silent !python /home/takina/scripts/cleantodo.py -f<CR>
+nnoremap <leader>ctex :w<CR>:!pdflatex -synctex=1 -interaction=nonstopmode "%:t"<CR>
+nnoremap <leader>cp :w<CR>:!python %<CR>
+nnoremap <leader>cn :w<CR>:!node %<CR>
+nnoremap <leader>cj :w<CR>:!javac %<CR>:!java -cp %:p:h %:t:r<CR>
+nnoremap <leader>cc :w<CR>:!g++ -g % -o %:r<CR>:!./%:r<CR>
+nnoremap <leader>ct :w<CR>:silent !python /home/takina/scripts/cleantodo.py -f<CR>
 
 " For plugins to load correctly
 filetype plugin indent on
@@ -165,6 +163,7 @@ set modelines=0
 
 " Show line numbers
 set number
+set relativenumber
 " autocmd BufReadPost * RltvNmbr
 
 " Show file stats
@@ -271,22 +270,12 @@ set showmatch
 map N Nzz
 map n nzz
 
+" Scrolling -- center cursor, makes it so much easier to track
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+
 " Clear serach with Enter
 nnoremap <CR> :let @/ = ""<CR>
-
-" Swap ; and :	Convenient. Also, swap with , for going forward
-" nnoremap ; :
-" nnoremap : ,
-" nnoremap , ;
-" xnoremap ; :
-" xnoremap : ,
-" xnoremap , ;
-
-" Space will toggle folds!
-nnoremap <space> za
-
-" Formatting
-" map <leader>q gqip
 
 " Convert to and from xxd (hex)
 nnoremap <leader>h :%!xxd<CR>
@@ -298,3 +287,7 @@ set listchars=tab:▸\ ,eol:¬
 " set list " To enable by default
 " Or use your leader key + l to toggle on/off
 map <leader>l :set list!<CR> " Toggle tabs and EOL
+
+" make <leader> space
+nnoremap <Space> <Nop>
+let mapleader = "<Space>"
