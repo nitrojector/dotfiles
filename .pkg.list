@@ -50,12 +50,16 @@
 	winetricks
 	ripgrep
 	mpv
+	ttf-mscorefonts-installer
+	./slack-desktop-4.39.95-amd64.deb
+	mesa-utils
 !apt
 @brew
 	gcc
 	fzf
 	nvim
 	fortune
+	zoxide
 !brew
 @snap
 	firefox
@@ -74,6 +78,7 @@
 	cc.arduino.IDE2
 	com.jeffser.Alpaca
 	com.github.xournalpp.xournalpp
+	com.obsproject.Studio
 !flatpak
 @add-apt-repository
 	ppa:appimagelauncher-team/stable

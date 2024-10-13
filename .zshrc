@@ -71,7 +71,6 @@ export NVM_DIR="$HOME/.nvm"
 
 # command inits
 eval "$(zoxide init zsh --cmd cd)"
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 source <(fzf --zsh)
 
 # >>> conda initialize >>>

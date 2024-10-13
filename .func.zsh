@@ -93,6 +93,20 @@ function fontinstallzip() {
   fc-cache -f -v
 }
 
+function readme() {
+	if [ -f "README.md" ]; then
+		nvim README.md
+	elif [ -f "readme.md" ]; then
+		nvim readme.md
+	elif [ -f "README" ]; then
+		nvim README
+	elif [ -f "readme" ]; then
+		nvim readme
+	else
+		nvim README.md
+	fi
+}
+
 function update() {
 	sudo apt update
 	sudo apt upgrade
