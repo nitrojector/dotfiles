@@ -13,14 +13,43 @@ local lspconf = require('lspconfig')
 lspconf.pyright.setup{}
 lspconf.clangd.setup{}
 
+-- Treesitter
+require'nvim-treesitter.configs'.setup {
+	ensure_installed = {
+		"c",
+		"cpp",
+		"python",
+		"typescript",
+		"javascript",
+		"lua",
+		"json",
+		"yaml",
+		"html",
+		"css",
+		"bash",
+		"go",
+		"markdown",
+		"markdown_inline",
+		"php",
+		"vim",
+		"vimdoc"
+	},
+	sync_install = false,
+	auto_install = true,
+	highlight = {
+		enable = true,
+	}
+}
+
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 	buffer = buffer,
 	callback = function()
-		vim.lsp.buf.format({ async = false })
+		if not vim.lsp.buf.format({ async = false }) then
+		end
 	end
 })
 
--- copy @ -> + when tabbing out
+-- copy @ -> + on focus lost
 vim.api.nvim_create_autocmd({ "FocusLost" }, {
 	pattern = { "*" },
 	command = [[call setreg("+", getreg("@"))]],
