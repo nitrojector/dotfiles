@@ -53,6 +53,7 @@
 	ttf-mscorefonts-installer
 	./slack-desktop-4.39.95-amd64.deb
 	mesa-utils
+	zsh-syntax-highlighting
 !apt
 @brew
 	gcc

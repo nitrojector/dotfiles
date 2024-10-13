@@ -65,6 +65,8 @@ fi
 [[ -f ~/.p10k.zsh ]] && . ~/.p10k.zsh
 [[ -f ~/.fzf.zsh ]] && . ~/.fzf.zsh
 [[ -f ~/gitstatus/gitstatus.prompt.zsh ]] && . ~/gitstatus/gitstatus.prompt.zsh
+[[ -f /etc/zsh_command_not_found ]] && . /etc/zsh_command_not_found
+[[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -91,7 +93,3 @@ if [ -f "/home/takina/miniforge3/etc/profile.d/mamba.sh" ]; then
     . "/home/takina/miniforge3/etc/profile.d/mamba.sh"
 fi
 # <<< conda initialize <<<
-
-
-
-PATH=~/.console-ninja/.bin:$PATH
