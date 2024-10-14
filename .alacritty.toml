@@ -5,8 +5,9 @@ import = [
 working_directory = "/home/takina"
 
 [shell]
-program = "/usr/bin/tmux"
-args = ["new", "-A", "-s", "takina"]
+program = "/usr/bin/zsh"
+# program = "/usr/bin/tmux"
+# args = ["new", "-A", "-s", "takina"]
 
 [env]
 WHATS_FOR_LUNCH = "🍣"

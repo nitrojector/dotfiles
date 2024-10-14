@@ -107,6 +107,10 @@ function readme() {
 	fi
 }
 
+function tmuxr() {
+	/usr/bin/tmux new -As $1
+}
+
 function update() {
 	sudo apt update
 	sudo apt upgrade
