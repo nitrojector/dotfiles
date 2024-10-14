@@ -50,10 +50,10 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 })
 
 -- copy @ -> + on focus lost
-vim.api.nvim_create_autocmd({ "FocusLost" }, {
-	pattern = { "*" },
-	command = [[call setreg("+", getreg("@"))]],
-})
+-- vim.api.nvim_create_autocmd({ "FocusLost" }, {
+-- 	pattern = { "*" },
+-- 	command = [[call setreg("+", getreg("@"))]],
+-- })
 
 
 -- Automatically re-indent the entire file on save
