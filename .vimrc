@@ -153,7 +153,7 @@ nnoremap <Leader>ctex :w<CR>:!pdflatex -synctex=1 -interaction=nonstopmode "%:t"
 nnoremap <Leader>cp :w<CR>:!python %<CR>
 nnoremap <Leader>cn :w<CR>:!node %<CR>
 nnoremap <Leader>cj :w<CR>:!javac %<CR>:!java -cp %:p:h %:t:r<CR>
-nnoremap <Leader>cc :w<CR>:!g++ -g % -o %:r<CR>:!./%:r<CR>
+nnoremap <Leader>cc :w<CR>:!g++ --std=c++11 -Wall -g % -o %:r<CR>:!./%:r<CR>
 nnoremap <Leader>ct :w<CR>:silent !python /home/takina/scripts/cleantodo.py -f<CR>
 
 " For plugins to load correctly
