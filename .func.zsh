@@ -111,6 +111,11 @@ function tmuxr() {
 	/usr/bin/tmux new -As $1
 }
 
+function rebootwin() {
+	sudo grub-reboot "Windows Boot Manager (on /dev/nvme0n1p1)"
+	sudo reboot
+}
+
 function update() {
 	sudo apt update
 	sudo apt upgrade
