@@ -58,6 +58,8 @@ Plug 'folke/trouble.nvim'
 " Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'ThePrimeagen/refactoring.nvim'
 
 call plug#end()
 
