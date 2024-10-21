@@ -54,6 +54,8 @@
 	./slack-desktop-4.39.95-amd64.deb
 	mesa-utils
 	zsh-syntax-highlighting
+	gopls
+	golang-golang-x-tools
 !apt
 @brew
 	gcc

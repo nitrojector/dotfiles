@@ -93,3 +93,5 @@ if [ -f "/home/takina/miniforge3/etc/profile.d/mamba.sh" ]; then
     . "/home/takina/miniforge3/etc/profile.d/mamba.sh"
 fi
 # <<< conda initialize <<<
+
+PATH=~/.console-ninja/.bin:$PATH

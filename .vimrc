@@ -44,6 +44,7 @@ call plug#begin()
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-obsession'
 Plug 'github/copilot.vim'
 Plug 'preservim/nerdtree'
 Plug 'junegunn/fzf'
