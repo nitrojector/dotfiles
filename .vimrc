@@ -56,8 +56,8 @@ Plug 'mhartington/formatter.nvim'
 Plug 'stevearc/conform.nvim'
 Plug 'folke/trouble.nvim'
 " Plug 'jeffkreeftmeijer/vim-numbertoggle'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/nvim-treesitter-context'
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Plug 'nvim-treesitter/nvim-treesitter-context'
 
 call plug#end()
 

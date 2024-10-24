@@ -2,11 +2,11 @@
 import = [
 	"alacritty-theme/themes/gruvbox-dark.yaml",
 ]
-working_directory = "/home/takina"
+working_directory = "/Users/martingwq"
 
-[shell]
-program = "/usr/bin/tmux"
-args = ["new", "-A", "-s", "takina"]
+# [shell]
+# program = "/opt/homebrew/bin/tmux"
+# args = ["new", "-A", "-s", "takina"]
 
 [env]
 WHATS_FOR_LUNCH = "🍣"
@@ -20,11 +20,10 @@ dynamic_title = true
 dynamic_padding = true
 
 [scrolling]
-# we are using tmux, so we don't need alacritty to scroll
-history = 0
+history = 50000
 multiplier = 4
 
 [font]
-normal = {family = "JetBrains Mono Nerd Font"}
-size = 12
+normal = {family = "FiraCode Nerd Font Mono"}
+size = 18
 
