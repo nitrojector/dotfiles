@@ -56,6 +56,12 @@
 	zsh-syntax-highlighting
 	gopls
 	golang-golang-x-tools
+	aria2
+	libtinfo5
+	libncurses5
+	./bruno_1.33.1_amd64_linux.deb
+	./microsoft-edge-stable_130.0.2849.52-1_amd64.deb
+	apt-show-versions
 !apt
 @brew
 	gcc
@@ -63,6 +69,7 @@
 	nvim
 	fortune
 	zoxide
+	curl
 !brew
 @snap
 	firefox
@@ -70,6 +77,9 @@
 	telegram-desktop
 	vlc
 	libreoffice
+	iamb
+	marktext
+	sudoku-rs
 !snap
 @flatpak
 	flathub
