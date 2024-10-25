@@ -14,7 +14,7 @@ cd "$SCRIPT_DIR"
 
 T_HOME=$HOME
 
-EXLUDE_PAT='(^dfinstall\.zsh$)|(^df\.zsh$)|(^README\.md$)|(^\.linked_dirs$)'
+EXCLUDE_PAT='(^dfinstall\.zsh$)|(^df\.zsh$)|(^README\.md$)|(^\.linked_dirs$)|(^.*\.swp$)'
 force_=0
 
 if [ "$1" = "-f" ]; then
@@ -34,20 +34,21 @@ fi
 
 # link files
 ls -Ap | grep -v / | while read -r p; do
-  echo $p
-	if [[ $p =~ $EXLUDE_PAT ]]; then
+	echo $p
+	if [[ $p =~ $EXCLUDE_PAT ]]; then
 		continue
 	fi
 
-	if [ -e "$T_HOME/$p" ]; then
-    if [ -L "$T_HOME/$p" ]; then
-			echo "File $p already exist symbolicly. Probably already linked. Skip."
-      continue
-    fi
+	echo "\"$T_HOME/$p\""
+	if [ -e "$T_HOME/$p" ] || [ -L "$T_HOME/$p" ]; then
 		if [ $force_ -eq 1 ]; then
 			echo "force: File $T_HOME/$p already exists. Remove and link."
 			rm "$T_HOME/$p"
 		else
+			if [ -L "$T_HOME/$p" ]; then
+				echo "File $p already exist symbolicly. Probably already linked. Skip."
+				continue
+			fi
 			echo "File $p already exists, and is not symbolic. Run with -f to overwrite."
 			continue
 		fi
@@ -58,15 +59,15 @@ done
 
 # link dirs
 while read -r p; do
-	if [ -e "$T_HOME/$p" ]; then
-    if [ -L "$T_HOME/$p" ]; then
-			echo "Dir $p already exist symbolicly. Probably already linked. Skip."
-      continue
-    fi
+	if [ -e "$T_HOME/$p" ] || [ -L "$T_HOME/$p" ]; then
 		if [ $force_ -eq 1 ]; then
 			echo "force: Dir $T_HOME/$p already exists. Remove and link."
 			rm -r "$T_HOME/$p"
 		else
+			if [ -L "$T_HOME/$p" ]; then
+				echo "Dir $p already exist symbolicly. Probably already linked. Skip."
+				continue
+			fi
 			echo "Dir $p already exists, and is not symbolic. Run with -f to overwrite."
 			continue
 		fi
