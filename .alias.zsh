@@ -15,3 +15,6 @@ alias es="nvim -S Session.vim"
 # Clipboard (macOS behavior)
 alias pbcopy="xclip -selection c"
 alias pbpaste="xclip -selection clipboard -o"
+
+# Random things
+alias sudoku=sudoku-rs
