@@ -24,7 +24,7 @@ config.font_size = 16.0
 -- Window settings
 config.window_decorations = "RESIZE | MACOS_FORCE_DISABLE_SHADOW"  -- Full decoration
 -- config.window_decorations = "NONE"
-config.window_background_opacity = 0.95
+config.window_background_opacity = 0.9
 config.window_padding = {
 	left = 8,
 	right = 8,
