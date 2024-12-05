@@ -44,6 +44,7 @@ call plug#begin()
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-obsession'
 Plug 'github/copilot.vim'
 Plug 'preservim/nerdtree'
 Plug 'junegunn/fzf'
@@ -56,8 +57,10 @@ Plug 'mhartington/formatter.nvim'
 Plug 'stevearc/conform.nvim'
 Plug 'folke/trouble.nvim'
 " Plug 'jeffkreeftmeijer/vim-numbertoggle'
-" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-" Plug 'nvim-treesitter/nvim-treesitter-context'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-context'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'ThePrimeagen/refactoring.nvim'
 
 call plug#end()
 
@@ -152,7 +155,6 @@ nnoremap <leader>cp :w<CR>:!python %<CR>
 nnoremap <leader>cn :w<CR>:!node %<CR>
 nnoremap <leader>cj :w<CR>:!javac %<CR>:!java -cp %:p:h %:t:r<CR>
 nnoremap <leader>cc :w<CR>:!g++ -g % -o %:r<CR>:!./%:r<CR>
-" nnoremap <leader>ctt :w<CR>:silent !python /home/takina/scripts/cleantodo.py -f<CR>
 
 " For plugins to load correctly
 filetype plugin indent on
