@@ -62,6 +62,7 @@
 	./bruno_1.33.1_amd64_linux.deb
 	./microsoft-edge-stable_130.0.2849.52-1_amd64.deb
 	apt-show-versions
+	i3
 !apt
 @brew
 	gcc
@@ -92,6 +93,7 @@
 	com.jeffser.Alpaca
 	com.github.xournalpp.xournalpp
 	com.obsproject.Studio
+	com.uploadedlobster.peek
 !flatpak
 @add-apt-repository
 	ppa:appimagelauncher-team/stable
