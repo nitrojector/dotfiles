@@ -10,7 +10,7 @@ alias sc=". ~/.zshrc"
 alias zshrc="nvim ~/.zshrc"
 alias vimrc="nvim ~/.vimrc"
 alias fzp="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
-alias es="nvim -S Session.vim"
+alias vs="nvim -S Session.vim"
 
 # Clipboard (macOS behavior)
 alias pbcopy="xclip -selection c"
