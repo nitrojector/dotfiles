@@ -3,7 +3,8 @@ local mux = wezterm.mux;
 local config = wezterm.config_builder()
 
 --- Program
-config.default_prog = { "/opt/homebrew/bin/tmux", "new", "-A", "-s", "takina"}
+-- config.default_prog = { "/opt/homebrew/bin/tmux", "new", "-A", "-s", "takina"}
+config.default_prog = { "/bin/zsh" }
 config.default_cwd = "~/"
 
 --- Appearance
