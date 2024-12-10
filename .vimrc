@@ -105,7 +105,7 @@ call plug#end()
 syntax enable
 " colorscheme monokai
 colorscheme monokai-pro
-"hi Normal guibg=NONE ctermbg=NONE
+" hi Normal guibg=NONE ctermbg=NONE
 hi NonText ctermfg=60 guifg=#AE81FF
 
 " Auto Reload
@@ -304,8 +304,8 @@ set statusline+=%0*\ %f\ %m%r%h%w							  " File name with full path
 set statusline+=%=\ %{&ff}							" Platform
 "set statusline+=\ ▸\ %Y											 " Language
 set statusline+=(%{&fileencoding?&fileencoding:&encoding}) " File encoding
-set statusline+=\ ▸\ %Y											 " Language
-set statusline+=\ [%4l/%L,%4v]\ %p%\% "Line, column, percentage
+set statusline+=\ %Y											 " Language
+set statusline+=\ [%4l/%L,%4v]\ %3p%\% "Line, column, percentage
 "set statusline+=\ %1*\ ○\ "
 set statusline+=\ ○\ "
 
