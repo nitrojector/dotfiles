@@ -16,5 +16,8 @@ alias es="nvim -S Session.vim"
 alias pbcopy="xclip -selection c"
 alias pbpaste="xclip -selection clipboard -o"
 
+# Windows Things
+alias explorer="explorer.exe ."
+
 # Random things
 alias sudoku=sudoku-rs
