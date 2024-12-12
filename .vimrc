@@ -1,32 +1,3 @@
-" Remove any trailing whitespace that is in the file
-autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
-
-" Restore cursor position to where it was before
-augroup JumpCursorOnEdit
-	au!
-	autocmd BufReadPost *
-				\ if expand("<afile>:p:h") !=? $TEMP |
-				\	if line("'\"") > 1 && line("'\"") <= line("$") |
-				\	  let JumpCursorOnEdit_foo = line("'\"") |
-				\	  let b:doopenfold = 1 |
-				\	  if (foldlevel(JumpCursorOnEdit_foo) > foldlevel(JumpCursorOnEdit_foo - 1)) |
-				\		 let JumpCursorOnEdit_foo = JumpCursorOnEdit_foo - 1 |
-				\		 let b:doopenfold = 2 |
-				\	  endif |
-				\	  exe JumpCursorOnEdit_foo |
-				\	endif |
-				\ endif
-	" Need to postpone using "zv" until after reading the modelines.
-	autocmd BufWinEnter *
-				\ if exists("b:doopenfold") |
-				\	exe "normal zv" |
-				\	if(b:doopenfold > 1) |
-				\		exe  "+".1 |
-				\	endif |
-				\	unlet b:doopenfold |
-				\ endif
-augroup END
-
 " Don't try to be vi compatible
 set nocompatible
 
@@ -35,60 +6,20 @@ map <Space> <Nop>
 let mapleader = " "
 
 " Helps force plugins to load correctly when it is turned back on below
-filetype off
+" filetype off
 
 "VSCODE_UNSUPPORTED_BEGIN
 " [PLUGINS] vim-plug
 call plug#begin()
 
-" Pope
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-obsession'
+" fzf-lua
 
-" GitHub Copilot
-Plug 'github/copilot.vim'
-
-" LSP / Language
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/nvim-treesitter-context'
-
-" Navigation / Search
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'preservim/nerdtree'
-Plug 'nvim-tree/nvim-tree.lua'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
-Plug 'ThePrimeagen/harpoon', { 'branch': 'harpoon2' }
-
-" Autocomplete
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
-
-" Snippets
-Plug 'L3MON4D3/LuaSnip'
-Plug 'saadparwaiz1/cmp_luasnip'
-
-" Colorscheme / Icons
 Plug 'nvim-tree/nvim-web-devicons'
+
 Plug 'loctvl842/monokai-pro.nvim'
 
-" Misc
-Plug 'andweeb/presence.nvim' " Discord Rich Presence
-
-" ---
-Plug 'nvim-lua/plenary.nvim'
-Plug 'ThePrimeagen/refactoring.nvim'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
-Plug 'mhartington/formatter.nvim'
-Plug 'stevearc/conform.nvim'
-Plug 'folke/trouble.nvim'
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
 call plug#end()
 
@@ -108,68 +39,8 @@ colorscheme monokai-pro
 " hi Normal guibg=NONE ctermbg=NONE
 hi NonText ctermfg=60 guifg=#AE81FF
 
-" Auto Reload
-set autoread
-
-" Toggle spellchecking
-function! ToggleSpellCheck()
-	set spell!
-	if &spell
-		echo "Spellcheck ON"
-	else
-		echo "Spellcheck OFF"
-	endif
-endfunction
-
-nnoremap <silent> <leader>s :call ToggleSpellCheck()<CR>
-
-" Create Blank Newlines and stay in Normal mode
-nnoremap <silent> zj :set paste<CR>o<Esc>:set nopaste<CR>
-nnoremap <silent> zk :set paste<CR>O<Esc>:set nopaste<CR>
-
-" Use ctrl-[hjkl] to select the active split!
-" nnoremap <silent> <c-k> :wincmd k<CR>
-" nnoremap <silent> <c-j> :wincmd j<CR>
-" nnoremap <silent> <c-h> :wincmd h<CR>
-" nnoremap <silent> <c-l> :wincmd l<CR>
-
-" Split windows on the right
-set splitright
-set splitbelow
-
-" Go to tab by number
-noremap <leader>1 1gt
-noremap <leader>2 2gt
-noremap <leader>3 3gt
-noremap <leader>4 4gt
-noremap <leader>5 5gt
-noremap <leader>6 6gt
-noremap <leader>7 7gt
-noremap <leader>8 8gt
-noremap <leader>9 9gt
-noremap <leader>0 :tablast<cr>
-
-" Go to last active tab
-au TabLeave * let g:lasttab = tabpagenr()
-nnoremap <silent> <leader>l :exe "tabn ".g:lasttab<cr>
-vnoremap <silent> <leader>l :exe "tabn ".g:lasttab<cr>
-
 " Make <C-c> behave like <Esc>
 inoremap <C-c> <Esc>
-
-" SQL autocomplete is C-c??
-let g:ftplugin_sql_omni_key = '<C-j>'
-
-" New Tab
-nnoremap <silent> <C-t> :tabnew<CR>
-
-" Edit vimrc \rc
-nnoremap <silent> <leader>rc :tabnew ~/.vimrc<CR>
-nnoremap <silent> <leader>rl :tabnew ~/.config/nvim/init.lua<CR>
-
-" Yank to system register
-nnoremap <leader>y :"+yy<CR>
-xnoremap <leader>y :y+<CR>
 
 " Paste and delete _ register
 xnoremap <silent> <leader>p "_dP
@@ -183,14 +54,6 @@ nnoremap <silent> <leader>d :w !diff % -<CR>
 " This is totally awesome - remap jj to escape in insert mode.	You'll never type jj anyway, so it's great!
 inoremap jj <Esc>
 
-" Save and run code
-nnoremap <leader>b :w<CR>:!./build.sh<CR>
-nnoremap <leader>ctex :w<CR>:!pdflatex -synctex=1 -interaction=nonstopmode "%:t"<CR>
-nnoremap <leader>cp :w<CR>:!python %<CR>
-nnoremap <leader>cn :w<CR>:!node %<CR>
-nnoremap <leader>cj :w<CR>:!javac %<CR>:!java -cp %:p:h %:t:r<CR>
-nnoremap <leader>cc :w<CR>:!g++ -g % -o %:r<CR>:!./%:r<CR>
-nnoremap <leader>ctt :w<CR>:silent !python /home/takina/scripts/cleantodo.py -f<CR>
 
 " For plugins to load correctly
 filetype plugin indent on
@@ -257,7 +120,17 @@ set ttyfast
 " Git Function
 
 function! GitBranch()
-	return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+	if !executable('git')
+		return ''
+	endif
+	let l:br = ''
+	if has('win32') || has('win64')
+		let l:br = system("git rev-parse --abbrev-ref HEAD 2>NUL")
+	else
+		let l:br = system("git rev-parse --abbrev-ref HEAD 2>/dev/null")
+	endif
+	let l:br = substitute(l:br, "\n", "", "")
+	return l:br
 endfunction
 
 function! StatuslineGit()
@@ -279,16 +152,6 @@ function! NLSP()
 	endif
 endfunction
 
-" Toggle hex (xxd) view
-function! ToggleHex()
-	if !exists("b:file_xxd") || b:file_xxd == 0
-		%!xxd
-		let b:file_xxd = 1
-	else
-		%!xxd -r
-		let b:file_xxd = 0
-	endif
-endfunction
 
 inoremap <CR> <C-o>:call NLSP()<CR>
 "VSCODE_UNSUPPORTED_END
@@ -333,9 +196,6 @@ nnoremap <C-u> <C-u>zz
 
 " Clear serach with Enter
 nnoremap <leader><CR> :let @/ = ""<CR>
-
-" Convert to and from xxd (hex)
-nnoremap <leader>h :call ToggleHex()<CR>
 
 " Visualize tabs and newlines
 set listchars=tab:⇒\ ,eol:¬
