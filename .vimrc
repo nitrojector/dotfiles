@@ -41,26 +41,54 @@ filetype off
 " [PLUGINS] vim-plug
 call plug#begin()
 
+" Pope
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-obsession'
+
+" GitHub Copilot
 Plug 'github/copilot.vim'
-" Plug 'preservim/nerdtree' " Turning off nerdtree b/c it's so slow
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'loctvl842/monokai-pro.nvim'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
-Plug 'christoomey/vim-tmux-navigator'
+
+" LSP / Language
 Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-context'
+
+" Navigation / Search
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'preservim/nerdtree'
+Plug 'nvim-tree/nvim-tree.lua'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
+Plug 'ThePrimeagen/harpoon', { 'branch': 'harpoon2' }
+
+" Autocomplete
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+
+" Snippets
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
+
+" Colorscheme / Icons
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'loctvl842/monokai-pro.nvim'
+
+" Misc
+Plug 'andweeb/presence.nvim' " Discord Rich Presence
+
+" ---
+Plug 'nvim-lua/plenary.nvim'
+Plug 'ThePrimeagen/refactoring.nvim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 Plug 'mhartington/formatter.nvim'
 Plug 'stevearc/conform.nvim'
 Plug 'folke/trouble.nvim'
-" Plug 'jeffkreeftmeijer/vim-numbertoggle'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/nvim-treesitter-context'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'ThePrimeagen/refactoring.nvim'
 
 call plug#end()
 
@@ -70,15 +98,15 @@ call plug#end()
 " imap <silent> <C-j> <Plug>(copilot-next)
 " imap <silent> <C-k> <Plug>(copilot-prev) " Disabled b/c conflict with
 
-" vim-tmux-navigator
-nnoremap <silent> <leader>t :NERDTreeToggle<CR>
-" nnoremap <silent> <leader>o :tabe<CR>:Files<CR> " Apparently I don't need this, just use C-t with :Files
-nnoremap <silent> <leader>f :Files<CR>
 "VSCODE_UNSUPPORTED_END
 
 
 " Turn on syntax highlighting
-syntax on
+syntax enable
+" colorscheme monokai
+colorscheme monokai-pro
+" hi Normal guibg=NONE ctermbg=NONE
+hi NonText ctermfg=60 guifg=#AE81FF
 
 " Auto Reload
 set autoread
@@ -127,7 +155,10 @@ nnoremap <silent> <leader>l :exe "tabn ".g:lasttab<cr>
 vnoremap <silent> <leader>l :exe "tabn ".g:lasttab<cr>
 
 " Make <C-c> behave like <Esc>
-imap <C-c> <Esc>
+inoremap <C-c> <Esc>
+
+" SQL autocomplete is C-c??
+let g:ftplugin_sql_omni_key = '<C-j>'
 
 " New Tab
 nnoremap <silent> <C-t> :tabnew<CR>
@@ -143,6 +174,9 @@ xnoremap <leader>y :y+<CR>
 " Paste and delete _ register
 xnoremap <silent> <leader>p "_dP
 
+" Paste from copy register
+nnoremap <silent> <leader>p "0p
+
 " Show difference between buffer and file
 nnoremap <silent> <leader>d :w !diff % -<CR>
 
@@ -150,6 +184,7 @@ nnoremap <silent> <leader>d :w !diff % -<CR>
 inoremap jj <Esc>
 
 " Save and run code
+nnoremap <leader>b :w<CR>:!./build.sh<CR>
 nnoremap <leader>ctex :w<CR>:!pdflatex -synctex=1 -interaction=nonstopmode "%:t"<CR>
 nnoremap <leader>cp :w<CR>:!python %<CR>
 nnoremap <leader>cn :w<CR>:!node %<CR>
@@ -160,7 +195,6 @@ nnoremap <leader>ctt :w<CR>:silent !python /home/takina/scripts/cleantodo.py -f<
 " For plugins to load correctly
 filetype plugin indent on
 
-" Security
 set modelines=0
 
 " Show line numbers
@@ -180,8 +214,12 @@ set encoding=utf-8
 set wildmenu
 set wildmode=list:longest,full
 
-" Whitespace
+" wrap
 set wrap
+set breakindent
+let &showbreak='↪'
+" set cpo+=n
+
 
 set textwidth=0
 set formatoptions=tcqrn1
@@ -191,6 +229,12 @@ set softtabstop=4
 set noexpandtab
 set noshiftround
 
+" Show color column at 80 characters
+set colorcolumn=80
+
+" mks and quit all
+command! Q mksession! | qa
+
 " Cursor motion
 set scrolloff=3
 set backspace=indent,eol,start
@@ -198,14 +242,13 @@ set matchpairs+=<:> " use % to jump between pairs
 runtime! macros/matchit.vim
 
 " Move up/down editor lines (even when wrapped)
-nnoremap <silent> k gk
-nnoremap <silent> j gj
+" nnoremap <silent> k gk
+" nnoremap <silent> j gj
 " cnoremap <silent> k gk
 " cnoremap <silent> j gj
 inoremap <silent> <Up> <Esc>gka
 inoremap <silent> <Down> <Esc>gja
 
-" When I close a tab, remove the buffer
 set nohidden
 
 " Rendering
@@ -236,6 +279,17 @@ function! NLSP()
 	endif
 endfunction
 
+" Toggle hex (xxd) view
+function! ToggleHex()
+	if !exists("b:file_xxd") || b:file_xxd == 0
+		%!xxd
+		let b:file_xxd = 1
+	else
+		%!xxd -r
+		let b:file_xxd = 0
+	endif
+endfunction
+
 inoremap <CR> <C-o>:call NLSP()<CR>
 "VSCODE_UNSUPPORTED_END
 
@@ -248,12 +302,12 @@ set statusline+=%1*%{StatuslineGit()}						  " Git branch statusline
 set statusline+=%0*\ %f\ %m%r%h%w							  " File name with full path
 " set statusline+=%=%1*\ %0*\ %{&ff}							" Platform
 set statusline+=%=\ %{&ff}							" Platform
-set statusline+=\ ▸\ %Y											 " Language
+"set statusline+=\ ▸\ %Y											 " Language
 set statusline+=(%{&fileencoding?&fileencoding:&encoding}) " File encoding
-" set statusline+=\ %1*\ %0*\ [%4l,%4v]						  " Line and column
-set statusline+=\ ▸\ [%4l,%4v]						  " Line and column
-set statusline+=\ ▸\ %p%\%										   " Percentage of file at current position
-set statusline+=\ %1*\ 柒\ "								" Custom character
+set statusline+=\ %Y											 " Language
+set statusline+=\ [%4l/%L,%4v]\ %3p%\% "Line, column, percentage
+"set statusline+=\ %1*\ ○\ "
+set statusline+=\ ○\ "
 
 " Last line
 set showmode
@@ -278,14 +332,13 @@ nnoremap <C-d> <C-d>zz
 nnoremap <C-u> <C-u>zz
 
 " Clear serach with Enter
-nnoremap <CR> :let @/ = ""<CR>
+nnoremap <leader><CR> :let @/ = ""<CR>
 
 " Convert to and from xxd (hex)
-nnoremap <leader>h :%!xxd<CR>
-nnoremap <leader>g :%!xxd -r<CR>
+nnoremap <leader>h :call ToggleHex()<CR>
 
 " Visualize tabs and newlines
-set listchars=tab:▸\ ,eol:¬
+set listchars=tab:⇒\ ,eol:¬
 " Uncomment this to enable by default:
 " set list " To enable by default
 " Or use your leader key + l to toggle on/off
