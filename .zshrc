@@ -29,7 +29,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 zstyle ':omz:update' mode auto
 zstyle ':omz:update' frequency 13
 
-COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="false"
 
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
