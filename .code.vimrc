@@ -44,7 +44,7 @@ filetype off
 syntax enable
 " colorscheme monokai
 colorscheme monokai-pro
-"hi Normal guibg=NONE ctermbg=NONE
+" hi Normal guibg=NONE ctermbg=NONE
 hi NonText ctermfg=60 guifg=#AE81FF
 
 " Auto Reload
@@ -149,7 +149,6 @@ set visualbell
 " Yes, unicode!
 set encoding=utf-8
 
-" Cool tab completion stuff
 set wildmenu
 set wildmode=list:longest,full
 
@@ -216,8 +215,8 @@ set statusline+=%0*\ %f\ %m%r%h%w							  " File name with full path
 set statusline+=%=\ %{&ff}							" Platform
 "set statusline+=\ ▸\ %Y											 " Language
 set statusline+=(%{&fileencoding?&fileencoding:&encoding}) " File encoding
-set statusline+=\ ▸\ %Y											 " Language
-set statusline+=\ [%4l/%L,%4v]\ %p%\% "Line, column, percentage
+set statusline+=\ %Y											 " Language
+set statusline+=\ [%4l/%L,%4v]\ %3p%\% "Line, column, percentage
 "set statusline+=\ %1*\ ○\ "
 set statusline+=\ ○\ "
 
@@ -229,7 +228,7 @@ set showcmd
 " nnoremap / /\v
 " vnoremap / /\v
 set hlsearch
-set incsearch
+set incsearch " As we type
 set ignorecase
 set smartcase
 set showmatch
@@ -243,8 +242,9 @@ map n nzz
 nnoremap <C-d> <C-d>zz
 nnoremap <C-u> <C-u>zz
 
-" Clear serach with Enter
-nnoremap <CR> :let @/ = ""<CR>
+" Clear serach
+nnoremap <silent> <leader><CR> :nohlsearch<CR>
+" nnoremap <C-w> :nohlsearch<CR>
 
 " Convert to and from xxd (hex)
 nnoremap <leader>h :call ToggleHex()<CR>

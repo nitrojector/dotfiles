@@ -210,7 +210,6 @@ set visualbell
 " Yes, unicode!
 set encoding=utf-8
 
-" Cool tab completion stuff
 set wildmenu
 set wildmode=list:longest,full
 
@@ -317,7 +316,7 @@ set showcmd
 " nnoremap / /\v
 " vnoremap / /\v
 set hlsearch
-set incsearch
+set incsearch " As we type
 set ignorecase
 set smartcase
 set showmatch
@@ -331,8 +330,9 @@ map n nzz
 nnoremap <C-d> <C-d>zz
 nnoremap <C-u> <C-u>zz
 
-" Clear serach with Enter
-nnoremap <leader><CR> :let @/ = ""<CR>
+" Clear serach
+nnoremap <silent> <leader><CR> :nohlsearch<CR>
+" nnoremap <C-w> :nohlsearch<CR>
 
 " Convert to and from xxd (hex)
 nnoremap <leader>h :call ToggleHex()<CR>

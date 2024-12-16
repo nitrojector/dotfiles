@@ -21,6 +21,9 @@ config.font = wezterm.font_with_fallback {
 }
 config.font_size = 10.0
 
+-- FPS
+config.max_fps = 240
+
 -- Window settings
 -- config.window_decorations = "RESIZE"  -- Full decoration
 -- config.window_decorations = "TITLE"  -- Full decoration
