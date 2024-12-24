@@ -40,7 +40,7 @@ source $ZSH/oh-my-zsh.sh
 [[ -f ~/.path.zsh ]] && . ~/.path.zsh
 [[ -f ~/.alias.zsh ]] && . ~/.alias.zsh
 [[ -f ~/.func.zsh ]] && . ~/.func.zsh
-[[ -f "${DOTFILES_DIR}/df.zsh" ]] && . "${DOTFILES_DIR}/df.zsh"
+[[ -f "${DOTFILES_DIR}/df.sh" ]] && . "${DOTFILES_DIR}/df.sh"
 
 # Plugin Configs
 ## zsh-autosuggestions
@@ -77,20 +77,20 @@ source <(fzf --zsh)
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/takina/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$(${HOME}/miniforge3/bin/conda 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/takina/miniforge3/etc/profile.d/conda.sh" ]; then
-        . "/home/takina/miniforge3/etc/profile.d/conda.sh"
+    if [ -f "${HOME}/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "${HOME}/miniforge3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/takina/miniforge3/bin:$PATH"
+        export PATH="${HOME}/miniforge3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 
-if [ -f "/home/takina/miniforge3/etc/profile.d/mamba.sh" ]; then
-    . "/home/takina/miniforge3/etc/profile.d/mamba.sh"
+if [ -f "${HOME}/miniforge3/etc/profile.d/mamba.sh" ]; then
+    . "${HOME}/miniforge3/etc/profile.d/mamba.sh"
 fi
 # <<< conda initialize <<<
 

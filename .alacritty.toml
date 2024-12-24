@@ -2,7 +2,7 @@
 import = [
 	"alacritty-theme/themes/gruvbox-dark.yaml",
 ]
-working_directory = "/home/takina"
+# working_directory = "/home/takina"
 
 [shell]
 program = "/usr/bin/zsh"

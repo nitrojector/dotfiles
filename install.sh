@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env bash
 
 SCRIPT_DIR=
 SCRIPT_PATH=$(readlink -e -- "$0")
