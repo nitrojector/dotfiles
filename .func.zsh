@@ -107,8 +107,12 @@ function readme() {
 	fi
 }
 
-function tmuxr() {
-	/usr/bin/tmux new -As $1
+function mux() {
+	if [ -z "$1" ]; then
+		tmux new -As takina
+	else
+		tmux new -As $1
+	fi
 }
 
 function rebootwin() {

@@ -1,0 +1,8 @@
+[init]
+	defaultBranch = main
+[alias]
+	s = status
+	a = add
+	aa = add --all
+	ua = rm -r --cached .
+	ck = checkout

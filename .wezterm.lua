@@ -2,9 +2,20 @@ local wezterm = require "wezterm";
 local mux = wezterm.mux;
 local config = wezterm.config_builder()
 
+--- Hostname
+local function getHostname()
+    local f = io.popen ("/bin/hostname")
+    local hostname = f:read("*a") or ""
+    f:close()
+    hostname =string.gsub(hostname, "\n$", "")
+    return hostname
+end
+local hostname = getHostname()
+
 --- Program
-config.default_prog = { "tmux", "new", "-A", "-s", "takina"}
-config.default_cwd = "~/"
+-- config.default_prog = { "tmux", "new", "-A", "-s", "takina"}
+config.default_prog = { "/usr/bin/zsh" }
+config.default_cwd = "~"
 
 --- Appearance
 -- Color scheme
@@ -19,22 +30,46 @@ config.font = wezterm.font_with_fallback {
 	{ family ="monospace", weight = "Regular" },
 	{ family ="sans-serif", weight = "Regular" },
 }
-config.font_size = 10.0
+
+if hostname == "chisato" then
+	config.font_size = 12.0
+elseif hostname == "jectlin" then
+	config.font_size = 10.0
+else
+	config.font_size = 10.0
+end
 
 -- FPS
 config.max_fps = 240
 
 -- Window settings
 -- config.window_decorations = "RESIZE"  -- Full decoration
--- config.window_decorations = "TITLE"  -- Full decoration
-config.window_decorations = "NONE"
+config.window_decorations = "TITLE"  -- Full decoration
+-- config.window_decorations = "NONE"
 config.window_background_opacity = 0.95
-config.window_padding = {
-	left = 4,
-	right = 4,
-	top = 0,
-	bottom = 0,
-}
+
+if hostname == "chisato" then
+	fig.window_padding = {
+		left = 7,
+		right = 7,
+		top = 0,
+		bottom = 0,
+	}
+elseif hostname == "jectlin" then
+	fig.window_padding = {
+		left = 4,
+		right = 4,
+		top = 0,
+		bottom = 0,
+	}
+else
+	fig.window_padding = {
+		left = 4,
+		right = 4,
+		top = 0,
+		bottom = 0,
+	}
+end
 
 --- Maximize window on startup
 wezterm.on("gui-startup", function()

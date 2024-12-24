@@ -16,5 +16,8 @@ alias vs="nvim -S Session.vim"
 alias pbcopy="xclip -selection c"
 alias pbpaste="xclip -selection clipboard -o"
 
+# Git Conf
+alias gitconf="GIT_CONFIG=~/.gitconfig.common git config"
+
 # Random things
 alias sudoku=sudoku-rs

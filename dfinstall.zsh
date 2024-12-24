@@ -77,5 +77,13 @@ while read -r p; do
 	ln -s "$SCRIPT_DIR/$p" "$T_HOME/$p" && echo "(Link) $SCRIPT_DIR/$line <-> $T_HOME/$line"
 done < .linked_dirs
 
+# include .gitconfig.common if applicable
+touch ~/.gitconfig
+if [ -e "$SCRIPT_DIR/.gitconfig.common" ] && ! cat "$T_HOME/.gitconfig" | grep -q "~/.gitconfig.common" ; then
+	echo "Include .gitconfig.common"
+	printf "[include]\n" >> "$T_HOME/.gitconfig"
+	printf "\tpath = ~/.gitconfig.common\n" >> "$T_HOME/.gitconfig"
+fi
+
 echo "Done."
 
