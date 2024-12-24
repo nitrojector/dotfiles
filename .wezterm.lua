@@ -44,26 +44,26 @@ config.max_fps = 240
 
 -- Window settings
 -- config.window_decorations = "RESIZE"  -- Full decoration
-config.window_decorations = "TITLE"  -- Full decoration
--- config.window_decorations = "NONE"
+-- config.window_decorations = "TITLE"  -- Full decoration
+config.window_decorations = "NONE"
 config.window_background_opacity = 0.95
 
 if hostname == "chisato" then
-	fig.window_padding = {
+	config.window_padding = {
 		left = 7,
 		right = 7,
 		top = 0,
 		bottom = 0,
 	}
 elseif hostname == "jectlin" then
-	fig.window_padding = {
+	config.window_padding = {
 		left = 4,
 		right = 4,
 		top = 0,
 		bottom = 0,
 	}
 else
-	fig.window_padding = {
+	config.window_padding = {
 		left = 4,
 		right = 4,
 		top = 0,
