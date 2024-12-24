@@ -290,3 +290,7 @@ function setproxy() {
 	echo http_proxy=http://127.0.0.1:$port
 	echo all_proxy=socks5://127.0.0.1:$port
 }
+
+function unsetproxy() {
+	export https_proxy= http_proxy= all_proxy=
+}
