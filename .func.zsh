@@ -280,3 +280,13 @@ function ins() {
     fi
 }
 
+function setproxy() {
+	port=$1
+	if [ -z "$port" ]; then
+		port=7897
+	fi
+	export https_proxy=http://127.0.0.1:$port http_proxy=http://127.0.0.1:$port all_proxy=socks5://127.0.0.1:$port
+	echo https_proxy=http://127.0.0.1:$port
+	echo http_proxy=http://127.0.0.1:$port
+	echo all_proxy=socks5://127.0.0.1:$port
+}
