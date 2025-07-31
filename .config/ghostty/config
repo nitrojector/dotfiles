@@ -36,7 +36,11 @@ clipboard-paste-protection = true
 shell-integration = zsh
 macos-option-as-alt = true
 auto-update = check
-initial-command = "tmux new -As takina"
+command = ~/.config/ghostty/startup.sh
 
 ## Appearance
-macos-icon = retro
+macos-icon = custom-style
+macos-icon-frame = plastic
+macos-icon-ghost-color = F4ACB1
+macos-icon-screen-color = 000000
+
