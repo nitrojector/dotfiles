@@ -291,7 +291,7 @@ function! ToggleHex()
 	endif
 endfunction
 
-inoremap <CR> <C-o>:call NLSP()<CR>
+"inoremap <CR> <C-o>:call NLSP()<CR>
 "VSCODE_UNSUPPORTED_END
 
 " Status bar

@@ -367,3 +367,15 @@ oln1 () {
   ping -oc 100000 1.1.1.1 > /dev/null && osascript -e "display notification \"Ping succeeded with 1.1.1.1\" with title \"Back Online\"" || echo ""
   say "Network Online"
 }
+
+dsh () {
+	docker exec -it $1 /bin/bash
+}
+
+mux () {
+	if [ -z "$1" ]; then
+		tmux new -As takina
+	else
+		tmux new -As $1
+	fi
+}

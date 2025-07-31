@@ -1,3 +1,5 @@
+typeset -U path
+
 export ZSH="/Users/martingwq/.oh-my-zsh"
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -12,7 +14,7 @@ fi
 [ -f ~/.env.zsh ] && . ~/.env.zsh
 [ -f ~/.alias.zsh ] && . ~/.alias.zsh
 [ -f ~/.func.zsh ] && . ~/.func.zsh
-[ -f ~/Git/_conf/dotfiles/df.zsh ] && . ~/Git/_conf/dotfiles/df.zsh
+[ -f ~/dev/conf_/dotfiles/df.zsh ] && . ~/dev/conf_/dotfiles/df.zsh
 [ -f "/Users/martingwq/.ghcup/env" ] && . "/Users/martingwq/.ghcup/env" # ghcup-env
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=243' # Make color more visible with gruvbox dark
@@ -46,10 +48,12 @@ export LANG=en_US.UTF-8
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='mvim'
+  export EDITOR='nvim'
 fi
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -71,7 +75,8 @@ else
         export PATH="/Users/martingwq/miniforge3/bin:$PATH"
     fi
 fi
+export PATH="/Users/martingwq/miniforge3/bin:$PATH"
 unset __conda_setup
 # <<< conda initialize <<<
 
-
+PATH=~/.console-ninja/.bin:$PATH

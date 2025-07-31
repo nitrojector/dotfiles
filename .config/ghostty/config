@@ -1,0 +1,42 @@
+# Ghostty Config
+
+## FONT
+font-family = "JetBrainsMono Nerd Font Mono"
+font-feature = calt
+font-size = 15
+
+## THEME/WINDOW
+title = "瀧奈"
+
+theme = GruvboxDarkHard
+background-opacity = 0.9
+
+window-padding-balance = true
+window-padding-color = background
+
+# window-decoration = false
+window-decoration = true
+
+window-height = 1000
+window-width = 1000
+
+resize-overlay = always
+resize-overlay-position = bottom-right
+
+## CURSOR
+cursor-style = block
+shell-integration-features = no-cursor
+cursor-style-blink = false
+cursor-click-to-move = true
+macos-secure-input-indication = true
+
+## MISC
+mouse-hide-while-typing = true
+clipboard-paste-protection = true
+shell-integration = zsh
+macos-option-as-alt = true
+auto-update = check
+initial-command = "tmux new -As takina"
+
+## Appearance
+macos-icon = retro

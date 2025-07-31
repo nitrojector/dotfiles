@@ -3,8 +3,8 @@ local mux = wezterm.mux;
 local config = wezterm.config_builder()
 
 --- Program
--- config.default_prog = { "/opt/homebrew/bin/tmux", "new", "-A", "-s", "takina"}
-config.default_prog = { "/bin/zsh" }
+config.default_prog = { "/opt/homebrew/bin/tmux", "new", "-A", "-s", "takina"}
+-- config.default_prog = { "/bin/zsh" }
 config.default_cwd = "~/"
 
 --- Appearance
@@ -21,6 +21,9 @@ config.font = wezterm.font_with_fallback {
 	{ family ="sans-serif", weight = "Regular" },
 }
 config.font_size = 15.0
+
+-- FPS
+config.max_fps = 240
 
 -- Window settings
 config.window_decorations = "RESIZE | MACOS_FORCE_DISABLE_SHADOW"  -- Full decoration

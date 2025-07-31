@@ -11,6 +11,7 @@ alias zshrc="nvim ~/.zshrc"
 alias vimrc="nvim ~/.vimrc"
 alias fzp="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 alias es="nvim -S Session.vim"
+alias vis="nvim -S Session.vim"
 
 alias waifu2x=waifu2x-ncnn-vulkan
 alias ytdl=yt-dlp
@@ -26,6 +27,5 @@ alias "vimrc=vi ~/.vimrc"
 alias "zshrc=vi ~/.zshrc"
 alias "tsr=npx ts-node"
 alias "hpy=/opt/homebrew/bin/python"
-alias "adbftc=adb connect 192.168.43.1:5555"
 alias "mcrconct=mcrcon 31.214.128.151 -p 50605 --password chisato_takina"
 

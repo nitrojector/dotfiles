@@ -39,6 +39,7 @@ lspconf.pyright.setup{}
 lspconf.clangd.setup{}
 lspconf.ts_ls.setup{}
 lspconf.gopls.setup{}
+lspconf.jdtls.setup{}
 
 -- vim-cmp
 local cmp = require'cmp'
