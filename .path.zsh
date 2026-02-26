@@ -13,6 +13,7 @@ prependpath() {
 
 # Paths
 # PATH="$(prependpath "$PATH" /)"
+PATH="$(prependpath "$PATH" "/usr/sbin")"
 PATH="$(prependpath "$PATH" "/usr/local/cuda-12/bin")"
 PATH="$(prependpath "$PATH" "${HOME}/Android/Sdk/platform-tools")"
 PATH="$(prependpath "$PATH" "/opt/go/bin")"
