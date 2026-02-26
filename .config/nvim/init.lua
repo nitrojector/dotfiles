@@ -33,12 +33,10 @@ local ntapi = require('nvim-tree.api')
 vim.keymap.set('n', '<leader>t', function() ntapi.tree.toggle() end)
 
 -- LSPs
-local lspconf = require('lspconfig')
-
-lspconf.pyright.setup{}
-lspconf.clangd.setup{}
-lspconf.ts_ls.setup{}
-lspconf.gopls.setup{}
+vim.lsp.enable("pyright")
+vim.lsp.enable("clangd")
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("gopls")
 
 -- vim-cmp
 local cmp = require'cmp'
@@ -91,33 +89,33 @@ local cmp = require'cmp'
 
   -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    }),
-    matching = { disallow_symbol_nonprefix_matching = false }
+	  mapping = cmp.mapping.preset.cmdline(),
+	  sources = cmp.config.sources({
+		  { name = 'path' }
+	  }, {
+		  { name = 'cmdline' }
+	  }),
+	  matching = { disallow_symbol_nonprefix_matching = false }
   })
 
   -- Set up lspconfig.
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-  require('lspconfig')['pyright'].setup {
-    capabilities = capabilities
-  }
-  require('lspconfig')['clangd'].setup {
-    capabilities = capabilities
-  }
-  require('lspconfig')['ts_ls'].setup {
-    capabilities = capabilities
-  }
-  require('lspconfig')['gopls'].setup {
-    capabilities = capabilities
-  }
+  vim.lsp.config('pyright', {
+	  capabilities = capabilities
+  })
+  vim.lsp.config('clangd', {
+	  capabilities = capabilities
+  })
+  vim.lsp.config('ts_ls', {
+	  capabilities = capabilities
+  })
+  vim.lsp.config('gopls', {
+	  capabilities = capabilities
+  })
 
 -- Treesitter
-require'nvim-treesitter.configs'.setup {
+require'nvim-treesitter'.setup {
 	ensure_installed = {
 		"c",
 		"cpp",
@@ -135,7 +133,11 @@ require'nvim-treesitter.configs'.setup {
 		"markdown_inline",
 		"php",
 		"vim",
-		"vimdoc"
+		"vimdoc",
+		"latex",
+		"glsl",
+		"hlsl",
+		"c_sharp"
 	},
 	sync_install = false,
 	auto_install = true,

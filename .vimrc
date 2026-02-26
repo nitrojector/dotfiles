@@ -104,7 +104,7 @@ call plug#end()
 " Turn on syntax highlighting
 syntax enable
 " colorscheme monokai
-colorscheme monokai-pro
+silent! colorscheme monokai-pro
 " hi Normal guibg=NONE ctermbg=NONE
 hi NonText ctermfg=60 guifg=#AE81FF
 

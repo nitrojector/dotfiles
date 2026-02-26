@@ -14,7 +14,7 @@ cd "$SCRIPT_DIR"
 
 T_HOME=$HOME
 
-EXCLUDE_PAT='(^dfinstall\.zsh$)|(^df\.zsh$)|(^README\.md$)|(^\.linked_dirs$)|(^.*\.swp$)'
+EXCLUDE_PAT='(^install\.sh$)|(^df\.sh$)|(^README\.md$)|(^\.linked_dirs$)|(^.*\.swp$)'
 force_=0
 
 if [ "$1" = "-f" ]; then
