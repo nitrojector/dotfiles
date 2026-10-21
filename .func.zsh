@@ -222,8 +222,8 @@ setproxy () {
 }
 
 entry () {
-  ENTRYLOC="/Users/martingwq/Git/_personal/365/$(date +'%Y/%m/%d').md"
-  REPOLOC="/Users/martingwq/Git/_personal/365/"
+  ENTRYLOC="/Users/martingwq/dev/personal_/365/$(date +'%Y/%m/%d').md"
+  REPOLOC="/Users/martingwq/dev/personal_/365/"
   PREVLOC="$PWD"
 
   while getopts ":p" opt; do
@@ -308,8 +308,8 @@ opttest () {
 }
 
 entryg () {
-  ENTRYLOC="/Users/martingwq/Git/_personal/365g/$(date +'%Y/%m/%d').md"
-  REPOLOC="/Users/martingwq/Git/_personal/365g/"
+  ENTRYLOC="/Users/martingwq/dev/personal_/365g/$(date +'%Y/%m/%d').md"
+  REPOLOC="/Users/martingwq/dev/personal_/365g/"
   ALIAS="wyvern"
 
   echo "EntryPath: $ENTRYLOC\n"

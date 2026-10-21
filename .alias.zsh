@@ -28,4 +28,5 @@ alias "zshrc=vi ~/.zshrc"
 alias "tsr=npx ts-node"
 alias "hpy=/opt/homebrew/bin/python"
 alias "mcrconct=mcrcon 31.214.128.151 -p 50605 --password chisato_takina"
+alias "cmakeb=cmake -B build -S . && cmake --build build"
 

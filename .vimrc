@@ -179,7 +179,7 @@ xnoremap <silent> <leader>p "_dP
 nnoremap <silent> <leader>p "0p
 
 " Show difference between buffer and file
-nnoremap <silent> <leader>d :w !diff % -<CR>
+" nnoremap <silent> <leader>d :w !diff % -<CR>
 
 " This is totally awesome - remap jj to escape in insert mode.	You'll never type jj anyway, so it's great!
 inoremap jj <Esc>
@@ -192,6 +192,8 @@ nnoremap <leader>cn :w<CR>:!node %<CR>
 nnoremap <leader>cj :w<CR>:!javac %<CR>:!java -cp %:p:h %:t:r<CR>
 nnoremap <leader>cc :w<CR>:!g++ -g % -o %:r<CR>:!./%:r<CR>
 nnoremap <leader>ctt :w<CR>:silent !python /home/takina/scripts/cleantodo.py -f<CR>
+
+command! Cmake :w<CR>:!cmake -S . -B build && cmake --build build<CR>
 
 " For plugins to load correctly
 filetype plugin indent on

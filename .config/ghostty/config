@@ -8,7 +8,8 @@ font-size = 15
 ## THEME/WINDOW
 title = "瀧奈(˶ᵔ ᵕ ᵔ˶)"
 
-theme = GruvboxDarkHard
+# theme = "Gruvbox Dark Hard"
+theme = "Gruvbox Material"
 background-opacity = 0.9
 
 window-padding-balance = true
@@ -43,4 +44,7 @@ macos-icon = custom-style
 macos-icon-frame = plastic
 macos-icon-ghost-color = F4ACB1
 macos-icon-screen-color = 000000
+
+## Behavior
+confirm-close-surface = false
 
