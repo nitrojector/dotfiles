@@ -250,7 +250,7 @@ vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
 vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
 
 --- LSP
-vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
+vim.keymap.set("n", "<leader>n", vim.lsp.buf.rename)
 vim.keymap.set("n", "grn", vim.lsp.buf.rename)
 vim.keymap.set({"n", "v"}, "gra", vim.lsp.buf.code_action)
 vim.keymap.set("n", "grr", vim.lsp.buf.references)
@@ -278,6 +278,11 @@ vim.api.nvim_set_keymap(
 )
 
 -- Show all diagnostics on current line in floating window
+vim.api.nvim_set_keymap(
+  'n', '<Leader>e', ':lua vim.diagnostic.open_float()<CR>',
+  { noremap = true, silent = true }
+)
+
 vim.api.nvim_set_keymap(
   'n', '<Leader>d', ':lua vim.diagnostic.open_float()<CR>',
   { noremap = true, silent = true }

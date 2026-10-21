@@ -261,7 +261,7 @@ endfunction
 
 function! StatuslineGit()
 	let l:branchname = GitBranch()
-	return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+	return strlen(l:branchname) > 0?' '.l:branchname.' ':''
 endfunction
 
 "VSCODE_UNSUPPORTED_BEGIN
@@ -292,11 +292,31 @@ endfunction
 inoremap <CR> <C-o>:call NLSP()<CR>
 "VSCODE_UNSUPPORTED_END
 
+" Map mode keys to user-friendly text labels
+let g:current_modes = {
+    \ 'n'  : 'NORMAL',
+    \ 'v'  : 'VISUAL',
+    \ 'V'  : 'V-LINE',
+    \ "\<C-v>" : 'V-BLOCK',
+    \ 'i'  : 'INSERT',
+    \ 'R'  : 'REPLACE',
+    \ 'c'  : 'COMMAND',
+    \ 't'  : 'TERMINAL'
+    \ }
+
+" Function to fetch the clear string label
+function! GetCurrentMode()
+    return get(g:current_modes, mode(), 'UNKNOWN')
+endfunction
+
 " Status bar
+hi StlGit  guibg=#3a6ea5 guifg=#ffffff
+hi StlMode guibg=#70a288 guifg=#000000
+hi StlInfo guibg=#444444 guifg=#cccccc
+
 set laststatus=2
-set statusline=
-set statusline+=%1*%{StatuslineGit()}						  " Git branch statusline
-" set statusline+=%0*\ %2{mode()}>								   " Mode
+set statusline=%#StlMode#\ %{GetCurrentMode()}								   " Mode
+set statusline+=\ %#StlGit#%{StatuslineGit()}						  " Git branch statusline
 " set statusline+=%0*\ %<%t\ %m%r%h%w						  " File name only
 set statusline+=%0*\ %f\ %m%r%h%w							  " File name with full path
 " set statusline+=%=%1*\ %0*\ %{&ff}							" Platform
@@ -306,10 +326,9 @@ set statusline+=(%{&fileencoding?&fileencoding:&encoding}) " File encoding
 set statusline+=\ %Y											 " Language
 set statusline+=\ [%4l/%L,%4v]\ %3p%\% "Line, column, percentage
 "set statusline+=\ %1*\ ○\ "
-set statusline+=\ ○\ "
 
 " Last line
-set showmode
+set noshowmode
 set showcmd
 
 " Searching *
