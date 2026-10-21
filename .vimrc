@@ -104,8 +104,12 @@ call plug#end()
 
 " Turn on syntax highlighting
 syntax enable
-" colorscheme monokai
-colorscheme monokai-pro
+
+if has('nvim')
+	" colorscheme monokai
+	colorscheme monokai-pro
+endif
+
 " hi Normal guibg=NONE ctermbg=NONE
 hi NonText ctermfg=60 guifg=#AE81FF
 
@@ -319,8 +323,15 @@ hi StlMode guibg=#70a288 guifg=#000000
 hi StlInfo guibg=#444444 guifg=#cccccc
 
 set laststatus=2
-set statusline=%#StlMode#\ %{GetCurrentMode()}								   " Mode
-set statusline+=\ %#StlGit#%{StatuslineGit()}						  " Git branch statusline
+
+if has('nvim')
+	set statusline=%#StlMode#\ %{GetCurrentMode()}
+	set statusline+=\ %#StlGit#%{StatuslineGit()}
+else
+	set statusline=%0*\ %{GetCurrentMode()}
+	set statusline+=\ %1*%{StatuslineGit()}
+endif
+
 " set statusline+=%0*\ %<%t\ %m%r%h%w						  " File name only
 set statusline+=%0*\ %f\ %m%r%h%w							  " File name with full path
 " set statusline+=%=%1*\ %0*\ %{&ff}							" Platform
@@ -328,7 +339,7 @@ set statusline+=%=\ %{&ff}							" Platform
 "set statusline+=\ ▸\ %Y											 " Language
 set statusline+=(%{&fileencoding?&fileencoding:&encoding}) " File encoding
 set statusline+=\ %Y											 " Language
-set statusline+=\ [%4l/%L,%4v]\ %3p%\% "Line, column, percentage
+set statusline+=\ [%4l/%L,%4v]\ %3p%\%\ "Line, column, percentage
 "set statusline+=\ %1*\ ○\ "
 
 " Last line
